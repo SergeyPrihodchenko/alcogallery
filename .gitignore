@@ -10,6 +10,7 @@
 
 # production
 /build
+/backEnd/vendor
 
 # misc
 .DS_Store

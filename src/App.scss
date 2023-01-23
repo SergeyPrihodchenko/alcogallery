@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+  
+a {
+    text-decoration: none;
+}
+  
+.header_nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(107, 187, 252);
+    box-shadow: 5px 3px 15px rgb(107, 187, 252);
+}
+
+.dialogTitle {
+    padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.authBtn {
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.header_login {
+    padding: 20px;
+    color: rgb(5, 69, 6);
+
+    &:hover {
+        color:white;
+        background-color:rgb(114, 192, 255);
+        border-radius: 20px;
+        box-shadow: 2px 3px 4px rgb(114, 192, 255), -2px -3px 4px rgb(114, 192, 255);
+    }
+}
+
+.singIn_icon {
+    padding: 20px;
+    color: white;
+    &:hover {
+        cursor: pointer;
+        color: black;
+        background-color:rgb(114, 192, 255);
+        border-radius: 20px;
+        box-shadow: 2px 3px 4px rgb(114, 192, 255), -2px -3px 4px rgb(114, 192, 255);
+    }
+
+    :active {
+        color: white;
+    }
+}

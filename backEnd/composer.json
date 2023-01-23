@@ -1,0 +1,14 @@
+{
+    "name": "alco/market",
+    "autoload": {
+        "psr-4": {
+            "Alco\\Market\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "anonimus"
+        }
+    ],
+    "require": {}
+}
