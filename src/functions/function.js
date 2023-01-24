@@ -13,7 +13,10 @@ export const authSend = async (name, password) => {
     });
 
     const result = await response.json();
-
+    if(result['success'] === true) {
+        document.location.reload();
+    }
+    
     return result;
 }
 
@@ -24,7 +27,12 @@ export function getCoockie(name) {
     let assocCookie = [];
     arrCoockie.forEach(el => {
         const cookie = el.split('=');
-        assocCookie[cookie[0]] = cookie[1];
+        console.log(cookie[0]);
+        if(cookie[0] !== '') {
+            cookie[0] = cookie[0].trim();
+            cookie[1] = cookie[1].trim();
+            assocCookie[cookie[0]] = cookie[1];
+        }
     });
 
     if(assocCookie[name] === undefined) {

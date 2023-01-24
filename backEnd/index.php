@@ -1,6 +1,7 @@
 <?php
 
 use Alco\Market\Class\HTTP\Action\Authentication;
+use Alco\Market\Class\HTTP\Action\LogOut;
 use Alco\Market\Class\HTTP\Request\Request;
 use Alco\Market\Class\HTTP\Response\ErrorResponse;
 
@@ -28,7 +29,8 @@ try {
 
 $routes = [
     'POST' => [
-        'AUTHENTICATION' => Authentication::class
+        'AUTHENTICATION' => Authentication::class,
+        'LOGOUT' => LogOut::class
     ]
 ];
 

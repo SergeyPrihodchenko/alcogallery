@@ -37,17 +37,17 @@ a {
   box-shadow: 2px 3px 4px rgb(114, 192, 255), -2px -3px 4px rgb(114, 192, 255);
 }
 
-.singIn_icon {
+.action_icon {
   padding: 20px;
   color: white;
 }
-.singIn_icon:hover {
+.action_icon:hover {
   cursor: pointer;
   color: black;
   background-color: rgb(114, 192, 255);
   border-radius: 20px;
   box-shadow: 2px 3px 4px rgb(114, 192, 255), -2px -3px 4px rgb(114, 192, 255);
 }
-.singIn_icon :active {
+.action_icon :active {
   color: white;
 }/*# sourceMappingURL=App.css.map */

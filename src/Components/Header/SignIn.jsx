@@ -25,7 +25,7 @@ const SignIn = () => {
 
     return (
         <>
-            <LoginIcon className='singIn_icon' fontSize='large' onClick={handleClickOpen} />
+            <LoginIcon className='action_icon' fontSize='large' onClick={handleClickOpen} />
             <AuthForm
                 open={open}
                 onClose={handleClose}

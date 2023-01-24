@@ -7,16 +7,13 @@ import SignIn from "./SignIn";
 
 const Header = () => {
 
-    let cookieToken = getCoockie('TokenSet');
-
-    const [token, setToken] = useState(cookieToken);
-
+    const [token, setToken] = useState(getCoockie('TokenSet'));
 
     return (
         <div className="header_nav">
             <Link to={'/'}><h1 className="header_login">Шота у ашота!</h1></Link>
             {token === false ? null : <LinkAdminPanel/>}
-            {token === false ? <SignIn/> : <Logout/>}
+            {token === false ? <SignIn/> : <Logout setToken={setToken}/>}
         </div>
     );
 }

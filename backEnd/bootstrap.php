@@ -8,7 +8,7 @@ use Alco\Market\Class\Repository\UsersRepository;
 
 $container = new DIContainer();
 
-$pdo = new PDO('sqlite:./db.db');
+$pdo = new PDO('sqlite:./db.sqlite');
 
 $container->bind(
     UsersRepository::class,

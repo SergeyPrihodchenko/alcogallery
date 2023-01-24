@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const LinkAdminPanel = () => {
     return (
-        <Link to={'adminPanel'}><AdminPanelSettingsIcon/></Link>
+        <Link to={'adminPanel'}><AdminPanelSettingsIcon className='action_icon'/></Link>
     );
 }
 

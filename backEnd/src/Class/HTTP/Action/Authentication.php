@@ -25,8 +25,8 @@ class Authentication {
     {
 
         try {
-            $nickName = strip_tags(trim($request->jsonBodyField('nickName')));
-            $password = strip_tags(trim($request->jsonBodyField('pass')));
+            $nickName = str_replace(';', '', strip_tags(trim($request->jsonBodyField('nickName'))));
+            $password = str_replace(';', '', strip_tags(trim($request->jsonBodyField('pass'))));
         } catch (Exception $e) {
             return new ErrorResponse('Not fond user data');
         }
@@ -44,7 +44,7 @@ class Authentication {
 
             header("Content-Type: aplication/json");
 
-            setcookie('setCookie', $token->token(), [
+            setcookie('TokenSet', $token->token(), [
                 'expires' => time() + 3600 * 24 * 5,
                 'path' => '/',
                 'secure' => false,
@@ -65,7 +65,7 @@ class Authentication {
         try {
             $this->tokensRepo->save($newToken);
 
-            setcookie('setCookie', $gen_token, [
+            setcookie('TokenSet', $gen_token, [
                 'expires' => time() + 3600 * 24 * 5,
                 'path' => '/',
                 'secure' => false,
