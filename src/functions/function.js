@@ -27,7 +27,7 @@ export function getCoockie(name) {
     let assocCookie = [];
     arrCoockie.forEach(el => {
         const cookie = el.split('=');
-        console.log(cookie[0]);
+
         if(cookie[0] !== '') {
             cookie[0] = cookie[0].trim();
             cookie[1] = cookie[1].trim();

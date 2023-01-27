@@ -40,7 +40,9 @@ class Authentication {
         if($token = $this->tokensRepo->getTokenById($user->id())) {
 
             $token->set_expires_on((new DateTimeImmutable())->modify('+5 day'));
-            $this->tokensRepo->save($token);
+            $expires = ($token->expires_on())->format(DateTimeImmutable::ATOM);
+            $oldToken = $token->token();
+            $this->tokensRepo->updateExpires($oldToken, $expires);
 
             header("Content-Type: aplication/json");
 

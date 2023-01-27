@@ -2,6 +2,8 @@
 
 use Alco\Market\Class\HTTP\Action\Authentication;
 use Alco\Market\Class\HTTP\Action\LogOut;
+use Alco\Market\Class\HTTP\Action\SaveContentData;
+use Alco\Market\Class\HTTP\Action\SaveFile;
 use Alco\Market\Class\HTTP\Request\Request;
 use Alco\Market\Class\HTTP\Response\ErrorResponse;
 
@@ -10,7 +12,9 @@ require_once './bootstrap.php';
 $request = new Request(
     $_GET,
     $_SERVER,
-    file_get_contents('php://input')
+    file_get_contents('php://input'),
+    $_COOKIE,
+    $_FILES
 );
 
 try {
@@ -30,7 +34,9 @@ try {
 $routes = [
     'POST' => [
         'AUTHENTICATION' => Authentication::class,
-        'LOGOUT' => LogOut::class
+        'LOGOUT' => LogOut::class,
+        'SEVE_IMG_FILE' => SaveFile::class,
+        'SAVE_CONTENT_DATA' => SaveContentData::class
     ]
 ];
 

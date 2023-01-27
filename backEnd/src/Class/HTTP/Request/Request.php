@@ -9,10 +9,11 @@ class Request {
     function __construct(
         private array $get,
         private array $server,
-        private string $body
+        private string $body,
+        private array $cookie,
+        private array $file
     )
     {
-        
     }
 
     private function jsonBody(): array
@@ -103,5 +104,15 @@ class Request {
         }
 
         return $value;
+    }
+
+    public function getCoockie(string $name): string
+    {
+        return $this->cookie[$name];
+    }
+
+    public function getFile(string $name): array
+    {
+        return $this->file[$name];
     }
 }

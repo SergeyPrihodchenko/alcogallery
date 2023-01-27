@@ -27,7 +27,6 @@ class TokensRepository {
             :id_user,
             :expires_on
         )
-        ON CONFLICT (token) DO UPDATE SET expires_on = :expires_on
     SQL;
             
         try {
@@ -72,7 +71,7 @@ class TokensRepository {
         
     }
 
-    public function checkTokenByToken($token) {
+    public function updateExpires($token, $expires) {
 
         $query = <<< 'SQL'
             UPDATE tokens
@@ -83,11 +82,31 @@ class TokensRepository {
         try {
             $statement = $this->connect->prepare($query);
             $statement->execute([
-                ':expires_on' => ((new DateTimeImmutable())->modify('-1 day'))->format(DateTimeImmutable::ATOM),
+                ':expires_on' => $expires,
                 ':token' => $token
             ]);
             } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
+
+    public function getTokenByToken(string $token): Token 
+    {
+        try {
+
+            $statement = $this->connect->prepare("SELECT * FROM tokens WHERE token = :token;");
+            $statement->execute([
+                ':token' => $token
+            ]);
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        return new Token(
+            $result['token'],
+            $result['id_user'],
+            new DateTimeImmutable($result['expires_on'])
+        );
+    } 
 }

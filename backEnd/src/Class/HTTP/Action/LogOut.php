@@ -7,6 +7,7 @@ use Alco\Market\Class\HTTP\Response\ErrorResponse;
 use Alco\Market\Class\HTTP\Response\Response;
 use Alco\Market\Class\HTTP\Response\SuccessfulResponse;
 use Alco\Market\Class\Repository\TokensRepository;
+use DateTimeImmutable;
 use Exception;
 
 class LogOut {
@@ -26,7 +27,9 @@ class LogOut {
         }
 
         try {
-            $this->tokensRepository->checkTokenByToken($token);
+
+            $expires = ((new DateTimeImmutable())->modify('-1 day'))->format(DateTimeImmutable::ATOM);
+            $this->tokensRepository->updateExpires($token, $expires);
             setcookie('TokenSet', $token, [
                 'expires' => time() - 3600 * 24 * 20,
                 'path' => '/',

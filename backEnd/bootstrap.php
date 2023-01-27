@@ -3,12 +3,13 @@
 require_once './vendor/autoload.php';
 
 use Alco\Market\Class\DIContainer\DIContainer;
+use Alco\Market\Class\Repository\ContentsRepository;
 use Alco\Market\Class\Repository\TokensRepository;
 use Alco\Market\Class\Repository\UsersRepository;
 
 $container = new DIContainer();
 
-$pdo = new PDO('sqlite:./db.sqlite');
+$pdo = new PDO('sqlite:./db.db');
 
 $container->bind(
     UsersRepository::class,
@@ -18,6 +19,10 @@ $container->bind(
 $container->bind(
     TokensRepository::class,
     new TokensRepository($pdo)
+);
+$container->bind(
+    ContentsRepository::class,
+    new ContentsRepository($pdo)
 );
 
 return $container;
