@@ -7,7 +7,6 @@ import { useState } from "react";
 const AdminPanel = () => {
 
     function TransitionRight(props) {
-        console.log(props);
         return <Slide {...props} direction="right" style={{color: colorAlert}}/>;
       }
 
@@ -42,7 +41,7 @@ const AdminPanel = () => {
     const handleChangeDescription = (e) => {
         setValueDescription(e.target.value);
     }
-
+  
     const sendData = async () => {
         
         const formData = new FormData();
@@ -51,14 +50,13 @@ const AdminPanel = () => {
         const data = {
             name: valueName,
             description: valueDescription,
-            file_name: valueFile.name
+            img_name: valueFile.name
         }
         
         const response = await fetch('./backEnd/index.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'ACTION': 'SEVE_IMG_FILE'
+                'ACTION': 'SAVE_IMG_FILE'
             },
             body: formData
         })
@@ -79,15 +77,20 @@ const AdminPanel = () => {
 
             result = await response.json();
         }
-        if(result.success) {
+        if(await result.success) {
             setColorAlert('rgb(114, 243, 138)');
             setValueAlert('Добавленно!');
+            handleClick(TransitionRight);
+            setValueName('');
+            setValueFileInput('Выберите файл');
+            setValueDescription('');
+        } else {
+            handleClick(TransitionRight);
+            setValueName('');
+            setValueFileInput('Выберите файл');
+            setValueDescription('');
+            return result.success;
         }
-        handleClick(TransitionRight);
-        setValueName('');
-        setValueFileInput('');
-        setValueDescription('');
-        return result.success;
     }
 
     return (

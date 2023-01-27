@@ -1,5 +1,10 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: DELETE, GET, POST');
+header("Access-Control-Allow-Headers: *");
+header('Access-Control-Allow-Credentials: true');
+
 use Alco\Market\Class\HTTP\Action\Authentication;
 use Alco\Market\Class\HTTP\Action\LogOut;
 use Alco\Market\Class\HTTP\Action\SaveContentData;
@@ -35,7 +40,7 @@ $routes = [
     'POST' => [
         'AUTHENTICATION' => Authentication::class,
         'LOGOUT' => LogOut::class,
-        'SEVE_IMG_FILE' => SaveFile::class,
+        'SAVE_IMG_FILE' => SaveFile::class,
         'SAVE_CONTENT_DATA' => SaveContentData::class
     ]
 ];

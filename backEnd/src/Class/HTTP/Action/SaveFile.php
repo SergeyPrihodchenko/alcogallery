@@ -21,7 +21,7 @@ class SaveFile {
     {
     
         if($this->repository->getTokenByToken($request->getCoockie('TokenSet'))) {
-            $upLoadingDir = 'imgs/';
+            $upLoadingDir = './imgs/';
             $file = $request->getFile('img_file');
             $uploadFile = $upLoadingDir . basename($file['name']);
    
@@ -37,7 +37,6 @@ class SaveFile {
             $is_check = array_search($extension, $array_ext_access);
 
             if($is_check) {
-                //  return new ErrorResponse($file['tmp_name']);
                 if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
                     return new SuccessfulResponse();
                 } 
