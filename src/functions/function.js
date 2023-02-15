@@ -41,3 +41,39 @@ export function getCoockie(name) {
         return assocCookie[name];
     }
 }
+
+export const sendFileData = async (files, valueName, valueDescription) => {
+    const formData = new FormData();
+        formData.append('img_file', files);
+
+        const data = {
+            name: valueName,
+            description: valueDescription,
+            img_name: files.name
+        }
+        
+        const response = await fetch('./backEnd/index.php', {
+            method: 'POST',
+            headers: {
+                'ACTION': 'SAVE_IMG_FILE'
+            },
+            body: formData
+        })
+
+        let result = await response.json();
+
+        if(result.success) {
+
+            
+            const response = await fetch('./backEnd/index.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'aplication/json',
+                    'ACTION': 'SAVE_CONTENT_DATA'
+                },
+                body: JSON.stringify(data)
+            });
+
+            return await response.json();
+        }
+}

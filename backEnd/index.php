@@ -6,6 +6,7 @@ header("Access-Control-Allow-Headers: *");
 header('Access-Control-Allow-Credentials: true');
 
 use Alco\Market\Class\HTTP\Action\Authentication;
+use Alco\Market\Class\HTTP\Action\GetContent;
 use Alco\Market\Class\HTTP\Action\LogOut;
 use Alco\Market\Class\HTTP\Action\SaveContentData;
 use Alco\Market\Class\HTTP\Action\SaveFile;
@@ -41,7 +42,8 @@ $routes = [
         'AUTHENTICATION' => Authentication::class,
         'LOGOUT' => LogOut::class,
         'SAVE_IMG_FILE' => SaveFile::class,
-        'SAVE_CONTENT_DATA' => SaveContentData::class
+        'SAVE_CONTENT_DATA' => SaveContentData::class,
+        'GET_CONTENT' => GetContent::class
     ]
 ];
 

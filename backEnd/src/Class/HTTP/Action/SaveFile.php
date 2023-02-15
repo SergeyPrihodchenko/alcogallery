@@ -7,6 +7,7 @@ use Alco\Market\Class\HTTP\Response\ErrorResponse;
 use Alco\Market\Class\HTTP\Response\Response;
 use Alco\Market\Class\HTTP\Response\SuccessfulResponse;
 use Alco\Market\Class\Repository\TokensRepository;
+use DateTimeImmutable;
 
 class SaveFile {
 
@@ -20,8 +21,9 @@ class SaveFile {
     public function handle(Request $request): Response
     {
     
-        if($this->repository->getTokenByToken($request->getCoockie('TokenSet'))) {
-            $upLoadingDir = './imgs/';
+        if($token = $this->repository->getTokenByToken($request->getCoockie('TokenSet'))) {
+            if($token->expires_on() >= new DateTimeImmutable()) {
+                $upLoadingDir = '../imgs/';
             $file = $request->getFile('img_file');
             $uploadFile = $upLoadingDir . basename($file['name']);
    
@@ -42,7 +44,8 @@ class SaveFile {
                 } 
             }
         }
-
+            }
+            
         return new ErrorResponse('No access rights');
     }
 

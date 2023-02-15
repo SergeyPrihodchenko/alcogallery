@@ -1,5 +1,6 @@
 import { Button, Slide, Snackbar, TextField } from "@mui/material";
 import { useState } from "react";
+import { sendFileData } from "../../functions/function";
 
 
   
@@ -28,57 +29,40 @@ const AdminPanel = () => {
     const [valueDescription, setValueDescription] = useState('');
     const [colorAlert, setColorAlert] = useState('red');
     const [valueAlert, setValueAlert] = useState('Ошибка при добавлении!');
+    const [backgroundDescription, setBackgroundDescription] = useState('');
+    const [backgroundInput, setBackgroundInput] = useState('');
+    const [backgroundFileInp, setBackgroundFileInp] = useState('');
+
     const handleChangeFile = (e) => {
         const file = e.target.files[0];
         setValueFile(file);
         setValueFileInput(file.name);
+        setBackgroundFileInp('')
     }
 
     const handleChangeName = (e) => {
         setValueName(e.target.value);
+        setBackgroundInput('');
     }
 
     const handleChangeDescription = (e) => {
         setValueDescription(e.target.value);
+        setBackgroundDescription('');
     }
   
     const sendData = async () => {
-        
-        const formData = new FormData();
-        formData.append('img_file', valueFile);
 
-        const data = {
-            name: valueName,
-            description: valueDescription,
-            img_name: valueFile.name
+        if(valueFile.length === 0 || valueName.length === 0 || valueDescription === 0) {
+            setBackgroundDescription('#f88b8b');
+            setBackgroundInput('#f88b8b');
+            setBackgroundFileInp('#f88b8b');
+            return;
         }
         
-        const response = await fetch('./backEnd/index.php', {
-            method: 'POST',
-            headers: {
-                'ACTION': 'SAVE_IMG_FILE'
-            },
-            body: formData
-        })
+        let result = await sendFileData(valueFile, valueName, valueDescription);
 
-        let result = await response.json();
-
-        if(result.success) {
-
-            
-            const response = await fetch('./backEnd/index.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'aplication/json',
-                    'ACTION': 'SAVE_CONTENT_DATA'
-                },
-                body: JSON.stringify(data)
-            });
-
-            result = await response.json();
-        }
         if(await result.success) {
-            setColorAlert('rgb(114, 243, 138)');
+            setColorAlert("rgb(114, 243, 138)");
             setValueAlert('Добавленно!');
             handleClick(TransitionRight);
             setValueName('');
@@ -87,6 +71,7 @@ const AdminPanel = () => {
         } else {
             handleClick(TransitionRight);
             setValueName('');
+            setValueFile([]);
             setValueFileInput('Выберите файл');
             setValueDescription('');
             return result.success;
@@ -98,12 +83,13 @@ const AdminPanel = () => {
             <div className="formBlock">
                 <div className="namefile">
                     <TextField id="outlined-basic" label="Название" variant="outlined" onChange={handleChangeName} value={valueName} style={{
-                        margin: '10px'
+                        margin: '10px',
+                        backgroundColor: backgroundInput
                     }}/>
                     <div className="blockFile">
                         <label className="input-file">
                             <input onChange={handleChangeFile} type="file" name="img_file"/>	
-                            <span>{valueFileInput}</span>
+                            <span style={{backgroundColor: backgroundFileInp}}>{valueFileInput}</span>
                         </label>
                     </div>
                 </div>
@@ -117,7 +103,8 @@ const AdminPanel = () => {
                     style={{
                         maxWidth: '350px',
                         width: '100%',
-                        margin: '10px'
+                        margin: '10px',
+                        backgroundColor: backgroundDescription
                     }}
                 />
                 <div className="">

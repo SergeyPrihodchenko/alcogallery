@@ -9,6 +9,7 @@ use Alco\Market\Class\HTTP\Response\Response;
 use Alco\Market\Class\HTTP\Response\SuccessfulResponse;
 use Alco\Market\Class\Repository\ContentsRepository;
 use Alco\Market\Class\Repository\TokensRepository;
+use DateTimeImmutable;
 use Exception;
 
 class SaveContentData {
@@ -22,29 +23,32 @@ class SaveContentData {
 
     public function handle(Request $request): Response
     {
-        if($this->tokensRepo->getTokenByToken($request->getCoockie('TokenSet'))) {
-            try {
-                $name = $request->jsonBodyField('name');
-                $description = $request->jsonBodyField('description');
-                $file_name = $request->jsonBodyField('img_name');
-            } catch (Exception $e) {
-                return new ErrorResponse("Not found data name:$name; description:$description; img_name:$file_name");
+        if($token = $this->tokensRepo->getTokenByToken($request->getCoockie('TokenSet'))) {
+            if($token->expires_on() >= new DateTimeImmutable()) {
+                try {
+                    $name = $request->jsonBodyField('name');
+                    $description = $request->jsonBodyField('description');
+                    $file_name = $request->jsonBodyField('img_name');
+                } catch (Exception $e) {
+                    return new ErrorResponse("Not found data name:$name; description:$description; img_name:$file_name");
+                }
+    
+                $content = new Content(
+                    Content::validator($name),
+                    $description,
+                    $file_name
+                );
+    
+                try {
+                    $this->contentsRepo->save($content);
+                } catch (Exception $e) {
+                    return new ErrorResponse($e->getMessage());
+                }
+    
+                return new SuccessfulResponse();
             }
-
-            $content = new Content(
-                $name,
-                $description,
-                $file_name
-            );
-
-            try {
-                $this->contentsRepo->save($content);
-            } catch (Exception $e) {
-                return new ErrorResponse($e->getMessage());
-            }
-
-            return new SuccessfulResponse();
         }
+            
         return new ErrorResponse('No access rights');
     }
 }

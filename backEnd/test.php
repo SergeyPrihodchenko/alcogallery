@@ -1,8 +1,3 @@
 <?php
 
 // echo hash('sha3-256', 'admin' . 'Vinokurow');
-
-// use Exception;
-
-// 807a64f1340d40e8636905338517c10d9ef65351daf86beb5c9bd93d0e18e0c3d469a7606291ab0b
-// 807a64f1340d40e8636905338517c10d9ef65351daf86beb5c9bd93d0e18e0c3d469a7606291ab0b

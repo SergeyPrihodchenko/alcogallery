@@ -34,4 +34,21 @@ class ContentsRepository {
             throw new Exception($e->getMessage());
         }
     }
+
+    public function getContent(): array
+    {
+        $contents = [];
+        try {
+            $statement = $this->connect->query("SELECT * FROM contents;");
+            while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $result['img_name'] = $result['img_name'];
+                $result['description'] = nl2br($result['description']);
+                $contents[] = $result;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        return $contents;
+    }
 }
