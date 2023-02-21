@@ -51,4 +51,14 @@ class ContentsRepository {
 
         return $contents;
     }
+
+    public function delete($id): void
+    {
+        try {
+            $statement = $this->connect->prepare("DELETE FROM contents WHERE id = :id;");
+            $statement->execute([':id' => $id]);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

@@ -45,7 +45,7 @@ const AuthForm = (props) => {
         <TextField style={{
             padding: '10px'
         }} className='inputAuth' id="filled-basic" label="nickName" variant="filled" value={nickValue} onChange={handleChangeNick}/>
-        <TextField style={{
+        <TextField type="password" style={{
             padding: '10px'
         }} className='inputAuth' id="filled-basic" label="password" variant="filled" value={passValue} onChange={handleChangePass}/>
         <div className='authBtn'>

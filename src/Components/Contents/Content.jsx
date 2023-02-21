@@ -13,7 +13,7 @@ const Content = () => {
     }
 
     useEffect(() => {requestContent()}, []);
-
+    
     return (
             <div className="container">
                 {Array.isArray(contents.contentData) ? contents.contentData.map(el => {return <ContentCard data={el}/>}) : null}
